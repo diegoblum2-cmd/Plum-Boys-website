@@ -109,14 +109,19 @@
   .hero{
     background:
       radial-gradient(circle at 85% 15%, rgba(255,255,255,0.06), transparent 45%),
-      linear-gradient(160deg, #0c2340 0%, var(--navy-mid) 55%, #0c2340 100%);
+      linear-gradient(160deg, var(--navy) 0%, var(--navy-mid) 55%, var(--navy) 100%);
     color:var(--white);
     padding:80px 0 0;
     position:relative;
     overflow:hidden;
   }
-  .hero-canvas{
-    position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none;
+  .hero-pattern{
+    position:absolute;inset:0;
+    opacity:0.10;
+    background-image:
+      repeating-linear-gradient(115deg, transparent 0 58px, rgba(255,255,255,0.5) 58px 60px),
+      repeating-linear-gradient(25deg, transparent 0 90px, rgba(255,255,255,0.35) 90px 92px);
+    pointer-events:none;
   }
   .hero-inner{
     position:relative;z-index:1;
@@ -164,7 +169,7 @@
   }
 
   .wave-divider{display:block;width:100%;position:relative;z-index:1;line-height:0;}
-  .wave-divider svg{width:100%;height:110px;display:block;}
+  .wave-divider svg{width:100%;height:70px;display:block;}
 
   /* ---------- Stats strip ---------- */
   .stats-strip{
@@ -431,7 +436,7 @@
 
 <!-- ================= HERO ================= -->
 <section class="hero" id="top">
-  <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
+  <div class="hero-pattern"></div>
   <div class="container hero-inner">
     <div>
       <div class="eyebrow">San Antonio, Texas</div>
@@ -464,7 +469,7 @@
     </div>
   </div>
   <div class="wave-divider">
-    <svg viewBox="0 0 1200 100" preserveAspectRatio="none"><path id="waveDividerPath" d="M0,45 C300,95 900,2 1200,45 L1200,100 L0,100 Z" fill="#eef1f4"/></svg>
+    <svg viewBox="0 0 1200 70" preserveAspectRatio="none"><path d="M0,40 C300,90 900,-10 1200,40 L1200,70 L0,70 Z" fill="#eef1f4"/></svg>
   </div>
 </section>
 
@@ -801,128 +806,6 @@
       stickyCall.classList.remove('show');
     }
   }, { passive: true });
-
-  // ---------- Flowing blueprint background canvas ----------
-  (function heroCanvasGrid() {
-    const canvas = document.getElementById('heroCanvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    const SPACING = 46;
-    const AMPLITUDE = 7;
-    const FREQ = 0.012;
-    const STEP = 12;
-    const SPEED = 0.0022;
-
-    let width = 0, height = 0, dpr = 1, time = 0, rafId = null, running = false;
-
-    function resize() {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      width = hero.offsetWidth;
-      height = hero.offsetHeight;
-      canvas.width = Math.round(width * dpr);
-      canvas.height = Math.round(height * dpr);
-      canvas.style.width = width + 'px';
-      canvas.style.height = height + 'px';
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      if (reduceMotion) drawStatic();
-    }
-
-    function drawFrame() {
-      ctx.clearRect(0, 0, width, height);
-      ctx.strokeStyle = 'rgba(255,255,255,0.09)';
-      ctx.lineWidth = 1;
-
-      for (let x = 0; x <= width + SPACING; x += SPACING) {
-        ctx.beginPath();
-        for (let y = 0; y <= height; y += STEP) {
-          const dx = x + Math.sin(y * FREQ + time + x * 0.01) * AMPLITUDE;
-          if (y === 0) ctx.moveTo(dx, y); else ctx.lineTo(dx, y);
-        }
-        ctx.stroke();
-      }
-      for (let y = 0; y <= height + SPACING; y += SPACING) {
-        ctx.beginPath();
-        for (let x = 0; x <= width; x += STEP) {
-          const dy = y + Math.sin(x * FREQ + time + y * 0.01) * AMPLITUDE;
-          if (x === 0) ctx.moveTo(x, dy); else ctx.lineTo(x, dy);
-        }
-        ctx.stroke();
-      }
-    }
-
-    function drawStatic() {
-      time = 0;
-      ctx.clearRect(0, 0, width, height);
-      ctx.strokeStyle = 'rgba(255,255,255,0.09)';
-      ctx.lineWidth = 1;
-      for (let x = 0; x <= width; x += SPACING) {
-        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, height); ctx.stroke();
-      }
-      for (let y = 0; y <= height; y += SPACING) {
-        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(width, y); ctx.stroke();
-      }
-    }
-
-    function loop() {
-      if (!running) return;
-      time += SPEED;
-      drawFrame();
-      rafId = requestAnimationFrame(loop);
-    }
-
-    function start() {
-      if (running || reduceMotion) return;
-      running = true;
-      rafId = requestAnimationFrame(loop);
-    }
-    function stop() {
-      running = false;
-      if (rafId) cancelAnimationFrame(rafId);
-      rafId = null;
-    }
-
-    let resizeTimeout;
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(resize, 150);
-    }, { passive: true });
-
-    resize();
-    if (!reduceMotion) {
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => entry.isIntersecting ? start() : stop());
-      }, { threshold: 0 });
-      io.observe(hero);
-    }
-  })();
-
-  // ---------- Scroll-reactive wave divider ----------
-  (function scrollWave() {
-    const wavePath = document.getElementById('waveDividerPath');
-    if (!wavePath) return;
-    let ticking = false;
-
-    const SCROLL_RANGE = 350; // px of scroll over which the wave fully flattens
-    function updateWave() {
-      const progress = Math.min(Math.max(window.scrollY / SCROLL_RANGE, 0), 1);
-      const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic — snappy start, soft settle
-      const c1y = 95 - 50 * eased;  // 95 -> 45 (deep dip flattening out)
-      const c2y = 2 + 43 * eased;   // 2 -> 45 (high rise flattening out)
-      wavePath.setAttribute('d', `M0,45 C300,${c1y.toFixed(1)} 900,${c2y.toFixed(1)} 1200,45 L1200,100 L0,100 Z`);
-      ticking = false;
-    }
-
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        requestAnimationFrame(updateWave);
-        ticking = true;
-      }
-    }, { passive: true });
-
-    updateWave();
-  })();
 
   const form = document.getElementById('contactForm');
   const formStatus = document.getElementById('formStatus');

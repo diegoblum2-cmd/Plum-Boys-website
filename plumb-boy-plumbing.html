@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plumb Boy Plumbing | San Antonio, TX</title>
+<style>
+  :root{
+    --navy: #132a52;
+    --navy-dark: #0b1c3a;
+    --navy-mid: #1c3766;
+    --steel: #8a94a3;
+    --white: #ffffff;
+    --gray-bg: #eef1f4;
+    --gray-border: #e1e5ea;
+    --gray-text: #6b7280;
+    --gray-text-light: #b7c0cf;
+    --orange: #e8622c;
+    --orange-dark: #d1531f;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Segoe UI', Arial, Helvetica, sans-serif;
+    color:#1a1a1a;
+    line-height:1.5;
+    background:var(--white);
+  }
+  img,svg{max-width:100%;display:block;}
+  .logo{display:block;border-radius:50%;overflow:hidden;background:#fff;flex-shrink:0;}
+  .logo img{width:100%;height:100%;object-fit:cover;transform:scale(1.18);display:block;}
+  a{text-decoration:none;color:inherit;}
+  ul{list-style:none;}
+  .container{
+    max-width:1100px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+  .section-pad{padding:80px 0;}
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    font-weight:700;
+    font-size:16px;
+    padding:16px 28px;
+    border-radius:8px;
+    border:2px solid transparent;
+    cursor:pointer;
+    transition:background .15s ease, color .15s ease, border-color .15s ease, transform .1s ease, box-shadow .15s ease;
+    white-space:nowrap;
+  }
+  .btn:active{transform:scale(0.98);}
+  .btn-white{background:var(--white);color:var(--navy);}
+  .btn-white:hover{background:#e8ecf1;box-shadow:0 6px 18px rgba(0,0,0,0.18);}
+  .btn-outline{background:transparent;color:var(--white);border-color:rgba(255,255,255,0.55);}
+  .btn-outline:hover{background:rgba(255,255,255,0.12);border-color:#fff;}
+  .btn-navy{background:var(--navy);color:var(--white);}
+  .btn-navy:hover{background:var(--navy-dark);}
+  .btn-orange{background:var(--orange);color:var(--white);}
+  .btn-orange:hover{background:var(--orange-dark);}
+  .btn-block{width:100%;}
+
+  /* ---------- Header ---------- */
+  header{
+    background:var(--white);
+    border-bottom:1px solid var(--gray-border);
+    position:sticky;
+    top:0;
+    z-index:100;
+  }
+  .header-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:12px 24px;
+    max-width:1100px;
+    margin:0 auto;
+  }
+  .brand{display:flex;align-items:center;gap:14px;}
+  .brand .logo{width:56px;height:56px;flex-shrink:0;}
+  .brand-name{
+    font-size:20px;font-weight:800;color:var(--navy);
+    letter-spacing:0.3px;text-transform:uppercase;
+  }
+  .header-actions{display:flex;align-items:center;gap:12px;}
+  .header-call-btn{
+    display:flex;align-items:center;gap:8px;
+    background:var(--navy);color:var(--white);
+    font-weight:700;font-size:15px;padding:12px 18px;border-radius:8px;
+  }
+  .header-call-btn:hover{background:var(--navy-dark);}
+  .header-call-btn svg{width:16px;height:16px;flex-shrink:0;}
+  .menu-btn{
+    width:44px;height:44px;border:1px solid var(--gray-border);border-radius:8px;
+    background:var(--white);display:flex;align-items:center;justify-content:center;
+    cursor:pointer;flex-shrink:0;
+  }
+  .menu-btn svg{width:20px;height:20px;stroke:var(--navy);}
+  .mobile-menu{display:none;flex-direction:column;background:var(--white);border-top:1px solid var(--gray-border);padding:8px 24px 20px;}
+  .mobile-menu.open{display:flex;}
+  .mobile-menu a{padding:14px 0;border-bottom:1px solid var(--gray-border);font-weight:600;color:var(--navy);}
+  .mobile-menu a:last-child{border-bottom:none;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:
+      radial-gradient(circle at 85% 15%, rgba(255,255,255,0.06), transparent 45%),
+      linear-gradient(160deg, #0c2340 0%, var(--navy-mid) 55%, #0c2340 100%);
+    color:var(--white);
+    padding:80px 0 0;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-canvas{
+    position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none;
+  }
+  .hero-inner{
+    position:relative;z-index:1;
+    display:grid;
+    grid-template-columns:1.15fr 0.85fr;
+    gap:40px;
+    align-items:center;
+    padding-bottom:70px;
+  }
+  .eyebrow{
+    font-size:13px;font-weight:700;letter-spacing:3px;color:var(--gray-text-light);
+    text-transform:uppercase;margin-bottom:18px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{content:"";width:28px;height:2px;background:var(--orange);display:inline-block;}
+  .hero h1{
+    font-size:52px;line-height:1.08;font-weight:900;text-transform:uppercase;
+    letter-spacing:-0.5px;margin-bottom:22px;
+  }
+  .hero .subline{font-size:23px;font-weight:700;color:#e7eaf0;margin-bottom:16px;}
+  .hero .desc{font-size:17px;color:var(--gray-text-light);max-width:520px;margin-bottom:32px;}
+  .hero-ctas{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:28px;}
+  .trust-row{display:flex;gap:22px;flex-wrap:wrap;}
+  .trust-item{
+    display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;color:#dfe4ec;
+  }
+  .trust-item svg{width:18px;height:18px;color:var(--orange);flex-shrink:0;}
+
+  .hero-visual{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .hero-visual::before{
+    content:"";position:absolute;width:420px;height:420px;border-radius:50%;
+    background:radial-gradient(circle, rgba(255,255,255,0.16), rgba(255,255,255,0.03) 60%, transparent 72%);
+    pointer-events:none;
+  }
+  .hero-visual .logo{
+    position:relative;z-index:1;
+    width:340px;height:340px;
+    box-shadow:0 25px 60px rgba(0,0,0,0.35), 0 0 0 10px rgba(255,255,255,0.06);
+    filter:drop-shadow(0 8px 24px rgba(0,0,0,0.3));
+  }
+
+  .wave-divider{display:block;width:100%;position:relative;z-index:1;line-height:0;}
+  .wave-divider svg{width:100%;height:110px;display:block;}
+
+  /* ---------- Stats strip ---------- */
+  .stats-strip{
+    background:var(--navy-dark);
+    padding:36px 24px;
+  }
+  .stats-inner{
+    max-width:1100px;margin:0 auto;
+    display:grid;grid-template-columns:repeat(3,1fr);gap:24px;text-align:center;
+  }
+  .stat-item .num{font-size:30px;font-weight:900;color:var(--white);margin-bottom:4px;}
+  .stat-item .label{font-size:13.5px;color:var(--gray-text-light);font-weight:600;letter-spacing:0.3px;}
+
+  /* ---------- Services section ---------- */
+  .services{background:var(--gray-bg);}
+  .section-title{
+    font-size:36px;font-weight:900;color:var(--navy);text-transform:uppercase;
+    margin-bottom:10px;letter-spacing:-0.5px;
+  }
+  .section-sub{font-size:16px;color:var(--gray-text);margin-bottom:40px;}
+  .emergency-box{
+    background:var(--white);border:1px solid var(--gray-border);border-left:5px solid var(--orange);
+    border-radius:8px;padding:22px 24px;display:flex;align-items:flex-start;gap:16px;margin-bottom:24px;
+  }
+  .emergency-box .icon{width:26px;height:26px;color:var(--orange);flex-shrink:0;margin-top:2px;}
+  .emergency-box .title-row{display:flex;align-items:center;gap:12px;margin-bottom:6px;flex-wrap:wrap;}
+  .emergency-box h3{font-size:18px;font-weight:800;color:var(--navy);}
+  .badge-247{background:var(--orange);color:var(--white);font-size:12px;font-weight:800;padding:4px 10px;border-radius:14px;letter-spacing:0.5px;}
+  .emergency-box p{color:var(--gray-text);font-size:15px;}
+  .emergency-box a{color:var(--gray-text);text-decoration:underline;}
+
+  .grid-frame{position:relative;padding:14px;}
+  .grid-corner{position:absolute;width:20px;height:20px;border-color:var(--orange);}
+  .grid-corner.tl{top:0;left:0;border-top:2px solid;border-left:2px solid;}
+  .grid-corner.tr{top:0;right:0;border-top:2px solid;border-right:2px solid;}
+  .grid-corner.bl{bottom:0;left:0;border-bottom:2px solid;border-left:2px solid;}
+  .grid-corner.br{bottom:0;right:0;border-bottom:2px solid;border-right:2px solid;}
+  .services-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+    background:var(--gray-border);border:1px solid var(--gray-border);
+  }
+  .service-card{
+    background:var(--white);overflow:hidden;
+    display:flex;flex-direction:column;font-weight:700;color:#1a1a1a;font-size:14.5px;
+  }
+  .service-card .thumb{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--gray-bg);transition:transform .3s ease;}
+  .service-card:hover .thumb{transform:scale(1.06);}
+  .service-card .label{
+    padding:12px 14px;display:block;line-height:1.3;
+    transition:background .15s ease;
+  }
+  .service-card:hover .label{background:var(--gray-bg);}
+
+  /* ---------- Process (how it works) ---------- */
+  .process{background:var(--navy-dark);position:relative;overflow:hidden;}
+  .process::before{
+    content:"";position:absolute;top:-40%;right:-10%;width:520px;height:520px;border-radius:50%;
+    background:radial-gradient(circle, rgba(255,255,255,0.05), transparent 70%);pointer-events:none;
+  }
+  .process-head{max-width:520px;margin-bottom:50px;position:relative;z-index:1;}
+  .process-head h2{font-size:34px;font-weight:900;color:var(--white);text-transform:uppercase;letter-spacing:-0.5px;margin-bottom:10px;}
+  .process-head p{font-size:16px;color:var(--gray-text-light);}
+  .process-row{display:flex;align-items:flex-start;position:relative;z-index:1;}
+  .process-step{flex:1;position:relative;}
+  .process-num{
+    font-size:64px;font-weight:900;line-height:1;display:block;margin-bottom:6px;
+    color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,0.28);
+  }
+  .process-step h3{font-size:19px;font-weight:800;color:var(--white);margin-bottom:10px;}
+  .process-step p{font-size:14.5px;color:var(--gray-text-light);max-width:260px;}
+  .process-arrow{flex-shrink:0;width:60px;padding-top:26px;display:flex;justify-content:center;}
+  .process-arrow svg{width:28px;height:28px;color:var(--orange);}
+
+  /* ---------- Why choose us ---------- */
+  .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  .why-card{background:var(--white);border:1px solid var(--gray-border);border-radius:10px;padding:28px;}
+  .why-card .icon-wrap{
+    width:44px;height:44px;border-radius:50%;border:2px solid var(--navy);
+    display:flex;align-items:center;justify-content:center;margin-bottom:18px;
+  }
+  .why-card .icon-wrap svg{width:22px;height:22px;color:var(--navy);}
+  .why-card h3{font-size:19px;font-weight:800;color:var(--navy);margin-bottom:10px;}
+  .why-card p{color:var(--gray-text);font-size:15px;}
+
+  /* ---------- Service area ---------- */
+  .service-area{background:var(--gray-bg);}
+  .pill-row{display:flex;gap:12px;margin-bottom:32px;flex-wrap:wrap;}
+  .pill{
+    display:flex;align-items:center;gap:8px;background:var(--white);border:1px solid var(--gray-border);
+    border-radius:8px;padding:12px 18px;font-weight:700;color:var(--navy);font-size:15px;
+  }
+  .pill svg{width:18px;height:18px;color:var(--navy);}
+  .area-card{background:var(--white);border:1px solid var(--gray-border);border-radius:10px;padding:36px;text-align:center;}
+  .area-card h3{font-size:22px;font-weight:900;color:var(--navy);text-transform:uppercase;margin-bottom:8px;}
+  .area-card p{color:var(--gray-text);max-width:420px;margin:0 auto 22px;}
+  .map-embed{border-radius:10px;overflow:hidden;line-height:0;box-shadow:0 4px 16px rgba(19,42,82,0.08);}
+
+  .insta-btn{
+    display:inline-flex;align-items:center;gap:10px;border:1px solid var(--gray-border);border-radius:8px;
+    padding:12px 20px;font-weight:700;color:var(--navy);
+  }
+  .insta-btn:hover{background:var(--gray-bg);}
+  .insta-btn svg{width:20px;height:20px;color:var(--navy);}
+
+  /* ---------- Meet us / Instagram ---------- */
+  .meet-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:48px;align-items:center;}
+  .meet-grid .section-sub{margin-bottom:24px;}
+  .meet-embed{display:flex;justify-content:center;}
+  .video-card{
+    display:block;position:relative;width:100%;max-width:340px;aspect-ratio:9/16;border-radius:16px;
+    overflow:hidden;background:linear-gradient(155deg, var(--navy-mid), var(--navy) 65%, var(--navy-dark));
+    box-shadow:0 16px 40px rgba(19,42,82,0.2);
+  }
+  .video-card::before{
+    content:"";position:absolute;inset:0;
+    background-image:repeating-linear-gradient(115deg, transparent 0 40px, rgba(255,255,255,0.05) 40px 42px);
+  }
+  .video-card-inner{
+    position:relative;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:16px;padding:24px;text-align:center;color:var(--white);
+  }
+  .video-card .logo{width:74px;height:74px;box-shadow:0 8px 20px rgba(0,0,0,0.3);}
+  .play-circle{
+    width:66px;height:66px;border-radius:50%;background:rgba(255,255,255,0.14);
+    border:2px solid rgba(255,255,255,0.5);display:flex;align-items:center;justify-content:center;
+    transition:background .15s ease, transform .15s ease;
+  }
+  .video-card:hover .play-circle{background:var(--orange);border-color:var(--orange);transform:scale(1.06);}
+  .play-circle svg{width:24px;height:24px;color:var(--white);margin-left:3px;}
+  .video-card-label{font-size:15px;font-weight:800;}
+  .video-card-sub{font-size:13px;color:var(--gray-text-light);}
+
+  /* ---------- Final CTA ---------- */
+  .final-cta{background:var(--navy);color:var(--white);text-align:center;padding:64px 24px;}
+  .final-cta h2{font-size:32px;font-weight:900;text-transform:uppercase;line-height:1.3;margin-bottom:32px;}
+  .strip{background:var(--navy-dark);color:#c9cfda;text-align:center;padding:20px 24px;font-size:15px;}
+
+  /* ---------- Contact form ---------- */
+  .contact-section{background:var(--gray-bg);}
+  .form-wrap{
+    max-width:720px;margin:0 auto;background:var(--white);border:1px solid var(--gray-border);
+    border-radius:14px;padding:40px;
+  }
+  .form-note{
+    display:flex;gap:10px;align-items:flex-start;
+    background:#fff6ef;border:1px solid #f4d9c4;color:#8a4a1f;
+    border-radius:8px;padding:12px 14px;font-size:13.5px;margin-bottom:28px;
+  }
+  .form-note svg{width:18px;height:18px;flex-shrink:0;margin-top:1px;}
+  .field{margin-bottom:22px;}
+  .field label{display:block;font-weight:700;font-size:14px;color:var(--navy);margin-bottom:8px;}
+  .field label .opt{font-weight:500;color:var(--gray-text);text-transform:none;}
+  .field input[type="text"],
+  .field input[type="tel"],
+  .field input[type="email"],
+  .field textarea{
+    width:100%;border:1.5px solid var(--gray-border);border-radius:8px;padding:13px 14px;
+    font-size:15px;font-family:inherit;color:#1a1a1a;transition:border-color .15s ease;
+  }
+  .field input:focus, .field textarea:focus{outline:none;border-color:var(--navy);}
+  .field textarea{resize:vertical;min-height:120px;}
+  .service-chip-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .service-chip{position:relative;}
+  .service-chip input{position:absolute;opacity:0;pointer-events:none;}
+  .service-chip label{
+    display:flex;align-items:center;gap:8px;
+    border:1.5px solid var(--gray-border);border-radius:8px;padding:11px 12px;
+    font-size:13.5px;font-weight:600;color:#333;cursor:pointer;margin-bottom:0;
+    transition:border-color .15s ease, background .15s ease, color .15s ease;
+  }
+  .service-chip input:checked + label{
+    border-color:var(--navy);background:var(--navy);color:var(--white);
+  }
+  .service-chip label svg{width:16px;height:16px;flex-shrink:0;}
+  .form-submit-row{margin-top:8px;}
+  .form-status{
+    display:none;margin-top:18px;padding:14px 16px;border-radius:8px;
+    background:#eef7f0;border:1px solid #bfe3c8;color:#256a3a;font-size:14px;font-weight:600;
+  }
+  .form-status.show{display:block;}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--white);padding:56px 24px 24px;}
+  .footer-inner{
+    max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:32px;padding-bottom:32px;
+  }
+  .footer-brand .logo{width:64px;height:64px;margin-bottom:14px;}
+  .footer-tagline{font-size:13px;font-weight:700;letter-spacing:2px;color:var(--gray-text);text-transform:uppercase;}
+  .footer-col h4{font-size:13px;font-weight:800;letter-spacing:1px;color:var(--navy);text-transform:uppercase;margin-bottom:14px;}
+  .footer-col a, .footer-col p{display:block;color:var(--gray-text);font-size:15px;padding:5px 0;}
+  .footer-col a:hover{color:var(--navy);}
+  .footer-bottom{border-top:1px solid var(--gray-border);padding-top:20px;font-size:13px;color:var(--gray-text);}
+
+  /* ---------- Sticky mobile call button ---------- */
+  .sticky-call{
+    display:none;position:fixed;bottom:16px;left:16px;right:16px;z-index:200;
+    background:var(--orange);color:var(--white);text-align:center;padding:16px;border-radius:10px;
+    font-weight:800;font-size:16px;box-shadow:0 6px 20px rgba(0,0,0,0.25);
+    align-items:center;justify-content:center;gap:10px;
+    transform:translateY(120%);transition:transform .25s ease;
+  }
+  .sticky-call.show{transform:translateY(0);}
+  .sticky-call svg{width:20px;height:20px;}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:900px){
+    .hero-inner{grid-template-columns:1fr;}
+    .hero-visual{display:none;}
+    .services-grid{grid-template-columns:repeat(2,1fr);}
+    .why-grid{grid-template-columns:1fr;}
+    .stats-inner{grid-template-columns:1fr;gap:20px;}
+    .footer-inner{grid-template-columns:1fr;gap:28px;}
+    .service-chip-grid{grid-template-columns:1fr;}
+    .form-wrap{padding:28px 22px;}
+    .process-row{flex-direction:column;gap:28px;}
+    .process-arrow{display:none;}
+    .meet-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:640px){
+    .header-call-btn span{display:none;}
+    .header-call-btn{padding:12px;}
+    .hero{padding:56px 0 0;}
+    .hero-inner{padding-bottom:50px;}
+    .hero h1{font-size:32px;}
+    .hero .subline{font-size:19px;}
+    .hero .desc{font-size:15.5px;}
+    .hero-ctas{flex-direction:column;}
+    .hero-ctas .btn{width:100%;}
+    .section-pad{padding:48px 0;}
+    .section-title{font-size:26px;}
+    .final-cta h2{font-size:24px;}
+    .sticky-call{display:flex;}
+    .stat-item .num{font-size:26px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header>
+  <div class="header-inner">
+    <a href="#top" class="brand">
+      <span class="logo"><img src="plumb-boy-logo.png" alt="Plumb Boy Plumbing logo"></span>
+      <span class="brand-name">Plumb Boy Plumbing</span>
+    </a>
+    <div class="header-actions">
+      <a href="tel:2103174039" class="header-call-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span>(210) 317-4039</span>
+      </a>
+      <button class="menu-btn" id="menuToggle" aria-label="Toggle menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-menu" id="mobileMenu">
+    <a href="#services">Services</a>
+    <a href="#why">Why Choose Us</a>
+    <a href="#area">Service Area</a>
+    <a href="#contact">Contact</a>
+    <a href="tel:2103174039">Call (210) 317-4039</a>
+  </nav>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
+  <div class="container hero-inner">
+    <div>
+      <div class="eyebrow">San Antonio, Texas</div>
+      <h1>San Antonio's Newest<br>Family-Owned Plumbing<br>Company</h1>
+      <p class="subline">Honest. Reliable. Done Right.</p>
+      <p class="desc">Residential and commercial plumbing across the San Antonio area — fair prices, straight answers, and work that holds up.</p>
+      <div class="hero-ctas">
+        <a href="tel:2103174039" class="btn btn-white">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Call Now: (210) 317-4039
+        </a>
+      </div>
+      <div class="trust-row">
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          Licensed Master Plumbers
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          24/7 Emergency Service
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          Family-Owned &amp; Local
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <span class="logo"><img src="plumb-boy-logo.png" alt="Plumb Boy Plumbing logo"></span>
+    </div>
+  </div>
+  <div class="wave-divider">
+    <svg viewBox="0 0 1200 100" preserveAspectRatio="none"><path id="waveDividerPath" d="M0,45 C300,95 900,2 1200,45 L1200,100 L0,100 Z" fill="#eef1f4"/></svg>
+  </div>
+</section>
+
+<!-- ================= STATS STRIP ================= -->
+<div class="stats-strip">
+  <div class="stats-inner">
+    <div class="stat-item"><div class="num">50+ Yrs</div><div class="label">Combined Plumbing Experience</div></div>
+    <div class="stat-item"><div class="num">24/7</div><div class="label">Emergency Availability</div></div>
+    <div class="stat-item"><div class="num">100%</div><div class="label">Family-Owned &amp; Local</div></div>
+  </div>
+</div>
+
+<!-- ================= SERVICES ================= -->
+<section class="services section-pad" id="services">
+  <div class="container">
+    <h2 class="section-title">Plumbing Services in San Antonio</h2>
+    <p class="section-sub">From a dripping faucet to a full sewer line replacement — one call covers it.</p>
+
+    <div class="emergency-box">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-7 7c0 3 2 5 2 8h10c0-3 2-5 2-8a7 7 0 0 0-7-7z"/><line x1="9" y1="21" x2="15" y2="21"/></svg>
+      <div>
+        <div class="title-row">
+          <h3>Emergency Plumbing Services</h3>
+          <span class="badge-247">24/7</span>
+        </div>
+        <p>Burst pipe or no hot water right now? Tap to <a href="tel:2103174039">call (210) 317-4039</a>.</p>
+      </div>
+    </div>
+
+    <div class="grid-frame">
+    <span class="grid-corner tl"></span><span class="grid-corner tr"></span><span class="grid-corner bl"></span><span class="grid-corner br"></span>
+    <div class="services-grid">
+      <a href="tel:2103174039" class="service-card">
+        <img class="thumb" src="images/drain-cleaning.jpg" alt="Drain cleaning">
+        <span class="label">Drain Cleaning</span>
+      </a>
+      <a href="tel:2103174039" class="service-card">
+        <img class="thumb" src="images/leak-detection.jpg" alt="Leak detection and repairs">
+        <span class="label">Leak Detection &amp; Repairs</span>
+      </a>
+      <a href="tel:2103174039" class="service-card">
+        <img class="thumb" src="images/water-heater.jpg" alt="Water heater repair and replacement">
+        <span class="label">Water Heater Repair &amp; Replacement</span>
+      </a>
+      <a href="tel:2103174039" class="service-card">
+        <img class="thumb" src="images/toilet.jpg" alt="Toilet repair and installation">
+        <span class="label">Toilet Repair &amp; Installation</span>
+      </a>
+      <a href="tel:2103174039" class="service-card">
+        <img class="thumb" src="images/faucet.jpg" alt="Faucet and fixture installation">
+        <span class="label">Faucet &amp; Fixture Installation</span>
+      </a>
+      <a href="tel:2103174039" class="service-card">
+        <img class="thumb" src="images/garbage-disposal.jpg" alt="Garbage disposal services">
+        <span class="label">Garbage Disposal Services</span>
+      </a>
+      <a href="tel:2103174039" class="service-card">
+        <img class="thumb" src="images/sewer-line.jpg" alt="Sewer line repair and replacement">
+        <span class="label">Sewer Line Repair &amp; Replacement</span>
+      </a>
+      <a href="tel:2103174039" class="service-card">
+        <img class="thumb" src="images/residential-commercial.jpg" alt="Residential and commercial plumbing">
+        <span class="label">Residential &amp; Commercial Plumbing</span>
+      </a>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROCESS ================= -->
+<section class="process section-pad">
+  <div class="container">
+    <div class="process-head">
+      <h2>No Runaround</h2>
+      <p>From "we have a problem" to "it's fixed" — here's exactly what happens when you reach out.</p>
+    </div>
+    <div class="process-row">
+      <div class="process-step">
+        <span class="process-num">01</span>
+        <h3>Reach Out</h3>
+        <p>Call (210) 317-4039 or send the quick form below — whichever's easier. Either way, a real person gets back to you.</p>
+      </div>
+      <div class="process-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </div>
+      <div class="process-step">
+        <span class="process-num">02</span>
+        <h3>We Diagnose &amp; Quote</h3>
+        <p>A licensed master plumber takes a look and gives you an upfront price before any work starts.</p>
+      </div>
+      <div class="process-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </div>
+      <div class="process-step">
+        <span class="process-num">03</span>
+        <h3>We Fix It Right</h3>
+        <p>Clean workspace, quality workmanship, and respect for your home — done right the first time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WHY CHOOSE US ================= -->
+<section class="section-pad" id="why" style="background:var(--gray-bg);">
+  <div class="container">
+    <h2 class="section-title">Why San Antonio Calls Plumb Boy</h2>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 1.7 2.9-.3 1 2.7 2.7 1-.3 2.9L22 12l-1.3 2.4.3 2.9-2.7 1-1 2.7-2.9-.3L12 22l-2.4-1.3-2.9.3-1-2.7-2.7-1 .3-2.9L2 12l1.3-2.4-.3-2.9 2.7-1 1-2.7 2.9.3z"/><path d="M9 12l2 2 4-4"/></svg>
+        </div>
+        <h3>50+ Years Combined Experience</h3>
+        <p>Licensed Master Plumbers on staff. Decades of San Antonio pipes, fixtures, and hard-water headaches — we've seen it before.</p>
+      </div>
+      <div class="why-card">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 17H4a2 2 0 0 1-2-2v-1a2 2 0 0 1 2-2h4"/><path d="M13 7h7a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-4"/><path d="M8 12l2 2 6-6"/></svg>
+        </div>
+        <h3>Honest, Fair Pricing</h3>
+        <p>Upfront quotes before the work starts. No surprise fees, no upsells you didn't ask for.</p>
+      </div>
+      <div class="why-card">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Family-Owned &amp; Local</h3>
+        <p>San Antonio's newest mom-and-pop plumbing company. You get the owners, not a call center.</p>
+      </div>
+      <div class="why-card">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"/></svg>
+        </div>
+        <h3>Every Home Treated Like Our Own</h3>
+        <p>Clean workspaces, quality workmanship, and respect for your house — on every job, big or small.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MEET US ================= -->
+<section class="section-pad" id="meet">
+  <div class="container">
+    <div class="meet-grid">
+      <div>
+        <h2 class="section-title">Meet Plumb Boy Plumbing</h2>
+        <p class="section-sub">A quick look at who's actually showing up at your door.</p>
+        <a href="https://www.instagram.com/plumbboyplumbing/" target="_blank" rel="noopener" class="insta-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          Follow us @plumbboyplumbing
+        </a>
+      </div>
+      <div class="meet-embed">
+        <a href="https://www.instagram.com/p/DbeNX1MTUzy/" target="_blank" rel="noopener" class="video-card">
+          <div class="video-card-inner">
+            <span class="logo"><img src="plumb-boy-logo.png" alt="Plumb Boy Plumbing logo"></span>
+            <span class="play-circle">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </span>
+            <span class="video-card-label">Watch on Instagram</span>
+            <span class="video-card-sub">@plumbboyplumbing</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SERVICE AREA ================= -->
+<section class="service-area section-pad" id="area">
+  <div class="container">
+    <h2 class="section-title">Serving the San Antonio Area</h2>
+    <p class="section-sub">We handle both residential and commercial plumbing throughout San Antonio and the surrounding communities — houses, duplexes, restaurants, shops, and small offices. If it carries water or waste, we work on it.</p>
+
+    <div class="pill-row">
+      <div class="pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Residential
+      </div>
+      <div class="pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1"/><line x1="9" y1="8" x2="9" y2="8"/><line x1="15" y1="8" x2="15" y2="8"/><line x1="9" y1="13" x2="9" y2="13"/><line x1="15" y1="13" x2="15" y2="13"/></svg>
+        Commercial
+      </div>
+      <div class="pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        San Antonio, TX
+      </div>
+    </div>
+
+    <div class="area-card">
+      <h3>Greater San Antonio</h3>
+      <p>Not sure if you're in our range? Here's where we work.</p>
+      <div class="map-embed">
+        <iframe src="https://www.google.com/maps?q=San+Antonio,+TX&#38;output=embed" width="100%" height="380" style="border:0;display:block;" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Plumb Boy Plumbing service area — San Antonio, TX"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FINAL CTA ================= -->
+<section class="final-cta">
+  <h2>Got a Plumbing Problem?<br>Call Today.</h2>
+  <a href="tel:2103174039" class="btn btn-white">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    (210) 317-4039
+  </a>
+</section>
+<div class="strip">No matter the size of the job, we treat every home like it's our own.</div>
+
+<!-- ================= CONTACT FORM ================= -->
+<section class="contact-section section-pad" id="contact">
+  <div class="container">
+    <h2 class="section-title">Request a Callback</h2>
+    <p class="section-sub">Tell us what's going on and we'll get back to you — or skip the form and just call (210) 317-4039.</p>
+
+    <div class="form-wrap">
+      <div class="form-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="8"/></svg>
+        <span><strong>NOTE:</strong> this form isn't wired to send anywhere yet. It'll be fully set up and ready to receive real requests once payment is complete.</span>
+      </div>
+
+      <form id="contactForm" novalidate>
+        <div class="field">
+          <label for="fullName">Full Name</label>
+          <input type="text" id="fullName" name="fullName" required autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" required autocomplete="tel" placeholder="(210) 555-0123">
+        </div>
+        <div class="field">
+          <label for="email">Email <span class="opt">(optional)</span></label>
+          <input type="email" id="email" name="email" autocomplete="email">
+        </div>
+        <div class="field">
+          <label>Service Needed</label>
+          <div class="service-chip-grid">
+            <div class="service-chip">
+              <input type="radio" name="service" id="svc1" value="Drain Cleaning">
+              <label for="svc1">Drain Cleaning</label>
+            </div>
+            <div class="service-chip">
+              <input type="radio" name="service" id="svc2" value="Leak Detection & Repairs">
+              <label for="svc2">Leak Detection &amp; Repairs</label>
+            </div>
+            <div class="service-chip">
+              <input type="radio" name="service" id="svc3" value="Water Heater Repair & Replacement">
+              <label for="svc3">Water Heater Repair &amp; Replacement</label>
+            </div>
+            <div class="service-chip">
+              <input type="radio" name="service" id="svc4" value="Toilet Repair & Installation">
+              <label for="svc4">Toilet Repair &amp; Installation</label>
+            </div>
+            <div class="service-chip">
+              <input type="radio" name="service" id="svc5" value="Faucet & Fixture Installation">
+              <label for="svc5">Faucet &amp; Fixture Installation</label>
+            </div>
+            <div class="service-chip">
+              <input type="radio" name="service" id="svc6" value="Garbage Disposal Services">
+              <label for="svc6">Garbage Disposal Services</label>
+            </div>
+            <div class="service-chip">
+              <input type="radio" name="service" id="svc7" value="Sewer Line Repair & Replacement">
+              <label for="svc7">Sewer Line Repair &amp; Replacement</label>
+            </div>
+            <div class="service-chip">
+              <input type="radio" name="service" id="svc8" value="Residential & Commercial Plumbing">
+              <label for="svc8">Residential &amp; Commercial Plumbing</label>
+            </div>
+            <div class="service-chip">
+              <input type="radio" name="service" id="svc9" value="Other">
+              <label for="svc9">Something Else</label>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label for="problem">Describe the Problem</label>
+          <textarea id="problem" name="problem" required placeholder="Tell us what's going on — leak, no hot water, clogged drain..."></textarea>
+        </div>
+        <div class="form-submit-row">
+          <button type="submit" class="btn btn-orange btn-block">Send Request</button>
+        </div>
+        <div class="form-status" id="formStatus">Thanks — this is a design preview, so nothing was actually sent. Call (210) 317-4039 for a real response.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="logo"><img src="plumb-boy-logo.png" alt="Plumb Boy Plumbing logo"></span>
+      <p class="footer-tagline">Protection. Prevention. Perfection.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="tel:2103174039">(210) 317-4039</a>
+      <a href="https://www.instagram.com/plumbboyplumbing/" target="_blank" rel="noopener">@plumbboyplumbing</a>
+      <p>San Antonio, TX</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a href="#services">Services</a>
+      <a href="#why">Why Choose Us</a>
+      <a href="#area">Service Area</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+  <div class="footer-inner" style="grid-template-columns:1fr;padding-top:0;padding-bottom:0;">
+    <p class="footer-bottom">&copy; 2026 Plumb Boy Plumbing. Licensed Master Plumbers. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- Sticky mobile call button -->
+<a href="tel:2103174039" class="sticky-call" id="stickyCall">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+  Call Now: (210) 317-4039
+</a>
+
+<script>
+  const menuToggle = document.getElementById('menuToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  menuToggle.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+  });
+
+  const stickyCall = document.getElementById('stickyCall');
+  const hero = document.querySelector('.hero');
+  const showAfter = () => hero.offsetTop + hero.offsetHeight - 100;
+  window.addEventListener('scroll', () => {
+    if (window.innerWidth <= 640 && window.scrollY > showAfter()) {
+      stickyCall.classList.add('show');
+    } else {
+      stickyCall.classList.remove('show');
+    }
+  }, { passive: true });
+
+  // ---------- Flowing blueprint background canvas ----------
+  (function heroCanvasGrid() {
+    const canvas = document.getElementById('heroCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const SPACING = 46;
+    const AMPLITUDE = 7;
+    const FREQ = 0.012;
+    const STEP = 12;
+    const SPEED = 0.0022;
+
+    let width = 0, height = 0, dpr = 1, time = 0, rafId = null, running = false;
+
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = hero.offsetWidth;
+      height = hero.offsetHeight;
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      canvas.style.width = width + 'px';
+      canvas.style.height = height + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      if (reduceMotion) drawStatic();
+    }
+
+    function drawFrame() {
+      ctx.clearRect(0, 0, width, height);
+      ctx.strokeStyle = 'rgba(255,255,255,0.09)';
+      ctx.lineWidth = 1;
+
+      for (let x = 0; x <= width + SPACING; x += SPACING) {
+        ctx.beginPath();
+        for (let y = 0; y <= height; y += STEP) {
+          const dx = x + Math.sin(y * FREQ + time + x * 0.01) * AMPLITUDE;
+          if (y === 0) ctx.moveTo(dx, y); else ctx.lineTo(dx, y);
+        }
+        ctx.stroke();
+      }
+      for (let y = 0; y <= height + SPACING; y += SPACING) {
+        ctx.beginPath();
+        for (let x = 0; x <= width; x += STEP) {
+          const dy = y + Math.sin(x * FREQ + time + y * 0.01) * AMPLITUDE;
+          if (x === 0) ctx.moveTo(x, dy); else ctx.lineTo(x, dy);
+        }
+        ctx.stroke();
+      }
+    }
+
+    function drawStatic() {
+      time = 0;
+      ctx.clearRect(0, 0, width, height);
+      ctx.strokeStyle = 'rgba(255,255,255,0.09)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x <= width; x += SPACING) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, height); ctx.stroke();
+      }
+      for (let y = 0; y <= height; y += SPACING) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(width, y); ctx.stroke();
+      }
+    }
+
+    function loop() {
+      if (!running) return;
+      time += SPEED;
+      drawFrame();
+      rafId = requestAnimationFrame(loop);
+    }
+
+    function start() {
+      if (running || reduceMotion) return;
+      running = true;
+      rafId = requestAnimationFrame(loop);
+    }
+    function stop() {
+      running = false;
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(resize, 150);
+    }, { passive: true });
+
+    resize();
+    if (!reduceMotion) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => entry.isIntersecting ? start() : stop());
+      }, { threshold: 0 });
+      io.observe(hero);
+    }
+  })();
+
+  // ---------- Scroll-reactive wave divider ----------
+  (function scrollWave() {
+    const wavePath = document.getElementById('waveDividerPath');
+    if (!wavePath) return;
+    let ticking = false;
+
+    const SCROLL_RANGE = 350; // px of scroll over which the wave fully flattens
+    function updateWave() {
+      const progress = Math.min(Math.max(window.scrollY / SCROLL_RANGE, 0), 1);
+      const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic — snappy start, soft settle
+      const c1y = 95 - 50 * eased;  // 95 -> 45 (deep dip flattening out)
+      const c2y = 2 + 43 * eased;   // 2 -> 45 (high rise flattening out)
+      wavePath.setAttribute('d', `M0,45 C300,${c1y.toFixed(1)} 900,${c2y.toFixed(1)} 1200,45 L1200,100 L0,100 Z`);
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(updateWave);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    updateWave();
+  })();
+
+  const form = document.getElementById('contactForm');
+  const formStatus = document.getElementById('formStatus');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    formStatus.classList.add('show');
+  });
+</script>
+
+</body>
+</html>
